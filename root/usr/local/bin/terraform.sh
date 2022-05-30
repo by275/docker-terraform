@@ -49,18 +49,13 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-$TF_CMD apply -auto-approve "$TF_PLAN"
-if [ $? -ne 0 ]; then
-  log "ERROR" "terraform apply FAILED"
-  exit 1
-fi
-
 if [ $TF_AUTO_RUN -eq 2 ]; then
   echo ""
   log "INFO" "Running terraform automation in 5s"
   sleep 5s
 else
-  exit 0
+  $TF_CMD apply -auto-approve "$TF_PLAN"
+  exit $?
 fi
 
 n=1
@@ -73,7 +68,7 @@ while true; do
   fi
   # error handling
   if echo "$RESP" | grep -iq "Out of host capacity"; then
-      printf "500-InternalError: Out of host capacity\n"
+      printf "500-InternalError, Out of host capacity\n"
   else
       printf "\n\n"
       echo "$RESP"
