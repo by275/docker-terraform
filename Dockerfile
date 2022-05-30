@@ -7,7 +7,7 @@ FROM alpine:${ALPINE_VER} AS alpine
 #
 FROM alpine AS builder
 
-ARG TARGETARCH=amd64
+ARG TARGETARCH
 
 RUN mkdir -p /bar/usr/local/bin
 

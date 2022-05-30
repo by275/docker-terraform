@@ -5,7 +5,7 @@
 ### version check
 
 ```bash
-$ docker run --rm -it ghcr.io/by275/terraform:latest version
+$ docker run --rm ghcr.io/by275/terraform:latest version
 Terraform v1.2.1
 on linux_amd64
 ```
@@ -15,7 +15,7 @@ on linux_amd64
 Place your `*.tf` file in `/config`, then
 
 ```bash
-$ docker run --rm -it \
+$ docker run --rm \
     -v ${PWD}/config:/config \
     ghcr.io/by275/terraform:latest init
 
@@ -32,9 +32,10 @@ Initializing provider plugins...
 First, try with `TF_AUTO_RUN=1`, which will be executing terraform commands `init`, `plan`, and `apply` in order.
 
 ```bash
-docker run --rm -it \
+docker run --rm \
     -v ${PWD}/config:config \
     -e TF_AUTO_RUN=1 \
+    -e TZ=Asia/Seoul \
     ghcr.io/by275/terraform:latest
 ```
 

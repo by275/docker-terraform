@@ -1,10 +1,11 @@
 #!/bin/sh
-set -e
 
 if [ $TF_AUTO_RUN -ne 0 ]; then
     terraform.sh
     exit $?
 fi
+
+set -e
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
