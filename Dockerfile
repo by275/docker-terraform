@@ -23,15 +23,16 @@ RUN \
     curl -LJ https://releases.hashicorp.com/terraform/${TF_VER}/terraform_${TF_VER}_linux_${TARGETARCH}.zip -o terraform.zip && \
     unzip terraform.zip -d /bar/usr/bin
 
+RUN \
+    echo "**** permissions ****" && \
+    chmod a+x /bar/usr/local/bin/*
+
 #
 # RELEASE
 #
 FROM alpine
 LABEL maintainer="by275"
 LABEL org.opencontainers.image.source https://github.com/by275/docker-terraform
-
-# add build artifacts
-COPY --from=builder /bar/ /
 
 RUN \
     echo "**** install runtime packages ****" && \
@@ -40,13 +41,10 @@ RUN \
         curl \
         ca-certificates \
         tzdata \
-        tini && \
-    echo "**** permissions ****" && \
-    chmod a+x /usr/local/bin/* && \
-    echo "**** cleanup ****" && \
-    rm -rf \
-        /tmp/* \
-        /root/.cache
+        tini
+
+# add build artifacts
+COPY --from=builder /bar/ /
 
 # environment settings
 ENV LANG=C.UTF-8 \
