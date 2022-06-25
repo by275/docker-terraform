@@ -31,7 +31,10 @@ COPY root/ /bar/
 
 RUN \
     echo "**** directories ****" && \
-    mkdir -p /bar/{config,data} && \
+    mkdir -p \
+        /bar/config \
+        /bar/data \
+        && \
     echo "**** permissions ****" && \
     chmod a+x /bar/usr/local/bin/*
 
